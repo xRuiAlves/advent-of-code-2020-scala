@@ -1,0 +1,8 @@
+# Created by https://www.toptal.com/developers/gitignore/api/scala
+# Edit at https://www.toptal.com/developers/gitignore?templates=scala
+
+### Scala ###
+*.class
+*.log
+
+# End of https://www.toptal.com/developers/gitignore/api/scala
