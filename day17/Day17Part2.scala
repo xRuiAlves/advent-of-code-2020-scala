@@ -13,19 +13,34 @@ object Day17Part2 {
     def main(args: Array[String]): Unit = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day17/input.txt").toArray
         val N = lines.last.length
-        val hcube_side = N * NUM_CYCLES
+        val hcube_side = N + 2*NUM_CYCLES
         var hcube_space = Array.ofDim[Char](hcube_side, hcube_side, hcube_side, hcube_side)
         var hcube_space_swap = Array.ofDim[Char](hcube_side, hcube_side, hcube_side, hcube_side)
 
         for (i <- 0 until N; j <- 0 until N) {
-            val x = i + hcube_side / 2
-            val y = j + hcube_side / 2
-            hcube_space(x)(y)(hcube_side / 2)(hcube_side / 2) = lines(i)(j)
-            hcube_space_swap(x)(y)(hcube_side / 2)(hcube_side / 2) = lines(i)(j)
+            val x = i + NUM_CYCLES
+            val y = j + NUM_CYCLES
+            hcube_space(x)(y)(NUM_CYCLES)(NUM_CYCLES) = lines(i)(j)
+            hcube_space_swap(x)(y)(NUM_CYCLES)(NUM_CYCLES) = lines(i)(j)
         }
 
-        for (_ <- 0 until NUM_CYCLES) {
-            applyCycle(hcube_space, hcube_space_swap)
+        for (cycle <- 1 to NUM_CYCLES) {
+            for (
+                i <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle);
+                j <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle);
+                k <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle);
+                l <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle)
+            ) {
+                val active_neighbors = countActiveNeighbors(hcube_space, i, j, k, l)
+                hcube_space(i)(j)(k)(l) match {
+                    case ACTIVE => hcube_space_swap(i)(j)(k)(l) =
+                        if (active_neighbors == 2 || active_neighbors == 3) ACTIVE
+                        else INACTIVE
+                    case _ => hcube_space_swap(i)(j)(k)(l) =
+                        if (active_neighbors == 3) ACTIVE
+                        else INACTIVE
+                }
+            }
 
             val temp = hcube_space
             hcube_space = hcube_space_swap
@@ -33,20 +48,6 @@ object Day17Part2 {
         }
 
         println(countActiveCubes(hcube_space))
-    }
-
-    def applyCycle(hcube_space: Array4D, hcube_space_swap: Array4D): Unit = {
-        for (i <- hcube_space.indices; j <- hcube_space(i).indices; k <- hcube_space(i)(j).indices; l <- hcube_space(i)(j)(k).indices) {
-            val active_neighbors = countActiveNeighbors(hcube_space, i, j, k, l)
-            hcube_space(i)(j)(k)(l) match {
-                case ACTIVE => hcube_space_swap(i)(j)(k)(l) =
-                    if (active_neighbors == 2 || active_neighbors == 3) ACTIVE
-                    else INACTIVE
-                case _ => hcube_space_swap(i)(j)(k)(l) =
-                    if (active_neighbors == 3) ACTIVE
-                    else INACTIVE
-            }
-        }
     }
 
     def countActiveNeighbors(hcube_space: Array4D, x: Int, y: Int, z: Int, w: Int): Int = {
@@ -68,7 +69,7 @@ object Day17Part2 {
     def getValue(hcube_space: Array4D, i: Int, j: Int, k: Int, l: Int): Int = {
         if (
             i >= 0 && j >= 0 && k >= 0 && l >= 0 &&
-            i < hcube_space.length && j < hcube_space(i).length && k < hcube_space(i)(j).length && l < hcube_space(i)(j)(k).length
+                i < hcube_space.length && j < hcube_space(i).length && k < hcube_space(i)(j).length && l < hcube_space(i)(j)(k).length
         ) hcube_space(i)(j)(k)(l)
         else OUT_OF_BOUNDS
     }

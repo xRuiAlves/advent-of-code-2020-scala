@@ -12,21 +12,34 @@ object Day17Part1 {
 
     def main(args: Array[String]): Unit = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day17/input.txt").toArray
-
         val N = lines.last.length
-        val cube_side = N * NUM_CYCLES
+        val cube_side = N + 2*NUM_CYCLES
         var cube_space = Array.ofDim[Char](cube_side, cube_side, cube_side)
         var cube_space_swap = Array.ofDim[Char](cube_side, cube_side, cube_side)
 
         for (i <- 0 until N; j <- 0 until N) {
-            val x = i + cube_side / 2
-            val y = j + cube_side / 2
-            cube_space(x)(y)(cube_side / 2) = lines(i)(j)
-            cube_space_swap(x)(y)(cube_side / 2) = lines(i)(j)
+            val x = i + NUM_CYCLES
+            val y = j + NUM_CYCLES
+            cube_space(x)(y)(NUM_CYCLES) = lines(i)(j)
+            cube_space_swap(x)(y)(NUM_CYCLES) = lines(i)(j)
         }
 
-        for (_ <- 0 until NUM_CYCLES) {
-            applyCycle(cube_space, cube_space_swap)
+        for (cycle <- 1 to NUM_CYCLES) {
+            for (
+                i <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle);
+                j <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle);
+                k <- (NUM_CYCLES - cycle) until (NUM_CYCLES + N + cycle)
+            ) {
+                val active_neighbors = countActiveNeighbors(cube_space, i, j, k)
+                cube_space(i)(j)(k) match {
+                    case ACTIVE => cube_space_swap(i)(j)(k) =
+                        if (active_neighbors == 2 || active_neighbors == 3) ACTIVE
+                        else INACTIVE
+                    case _ => cube_space_swap(i)(j)(k) =
+                        if (active_neighbors == 3) ACTIVE
+                        else INACTIVE
+                }
+            }
 
             val temp = cube_space
             cube_space = cube_space_swap
@@ -34,20 +47,6 @@ object Day17Part1 {
         }
 
         println(countActiveCubes(cube_space))
-    }
-
-    def applyCycle(cube_space: Array3D, cube_space_swap: Array3D): Unit = {
-        for (i <- cube_space.indices; j <- cube_space(i).indices; k <- cube_space(i)(j).indices) {
-            val active_neighbors = countActiveNeighbors(cube_space, i, j, k)
-            cube_space(i)(j)(k) match {
-                case ACTIVE => cube_space_swap(i)(j)(k) =
-                    if (active_neighbors == 2 || active_neighbors == 3) ACTIVE
-                    else INACTIVE
-                case _ => cube_space_swap(i)(j)(k) =
-                    if (active_neighbors == 3) ACTIVE
-                    else INACTIVE
-            }
-        }
     }
 
     def countActiveNeighbors(cube_space: Array3D, x: Int, y: Int, z: Int): Int = {
