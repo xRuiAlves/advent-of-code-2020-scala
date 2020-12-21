@@ -1,26 +1,26 @@
 package day20
 
-class Tile(val raw_tile: String) {
-    private val lines = raw_tile.split("\n")
-    val id: Int = lines.head.substring(5, 9).toInt
-    val img: Array[Array[Char]] = lines.drop(1).map(_.toCharArray)
+import scala.collection.mutable
 
-    val borders: Array[String] = Array(
-        img.head.mkString(""),
-        img.last.mkString(""),
-        img.map(_.head).mkString(""),
-        img.map(_.last).mkString("")
-    )
-    val reversed_borders: Array[String] = borders.map(_.reverse)
-    val border_combinations: Array[String] = borders ++ reversed_borders
+class Tile(val img: Array[Array[Char]], val ts: TileSet) {
 
-    override def toString: String = {
-        val sb = new StringBuilder()
-        sb.append(s"ID: $id\n")
-        img.foreach(line => {
-            line.foreach(cell => sb.append(cell))
-            sb.append("\n")
-        })
-        sb.toString()
+    val bitmap: Array[Int] = img.map(arr => arrayToBitMask(arr))
+
+    val top: Int = bitmap.head
+    val bottom: Int = bitmap.last
+    val left: Int = arrayToBitMask(img.map(_.head))
+    val right: Int = arrayToBitMask(img.map(_.last))
+
+    val borders: Set[Int] = Set(top, bottom, left, right)
+
+    def arrayToBitMask(arr: Array[Char]): Int = {
+        var bit_mask = 0
+        arr.reverse.foreach {
+            case '#' => bit_mask = (bit_mask << 1) | 1
+            case '.' => bit_mask = (bit_mask << 1)
+        }
+        bit_mask
     }
+
+    override def toString: String = s"${ts.id}"
 }
