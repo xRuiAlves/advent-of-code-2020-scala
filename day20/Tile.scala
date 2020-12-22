@@ -1,8 +1,6 @@
 package day20
 
-import scala.collection.mutable
-
-class Tile(val img: Array[Array[Char]], val ts: TileSet) {
+class Tile(val img: Array[Array[Char]], val ts: TileSet, var id: Int = -1) {
 
     val bitmap: Array[Int] = img.map(arr => arrayToBitMask(arr))
 
@@ -11,7 +9,17 @@ class Tile(val img: Array[Array[Char]], val ts: TileSet) {
     val left: Int = arrayToBitMask(img.map(_.head))
     val right: Int = arrayToBitMask(img.map(_.last))
 
-    val borders: Set[Int] = Set(top, bottom, left, right)
+    var top_neighbor: Tile = null
+    var bottom_neighbor: Tile = null
+    var left_neighbor: Tile = null
+    var right_neighbor: Tile = null
+
+    def neighbors: Array[Tile] = Array(
+        top_neighbor,
+        bottom_neighbor,
+        left_neighbor,
+        right_neighbor
+    )
 
     def arrayToBitMask(arr: Array[Char]): Int = {
         var bit_mask = 0
@@ -21,6 +29,4 @@ class Tile(val img: Array[Array[Char]], val ts: TileSet) {
         }
         bit_mask
     }
-
-    override def toString: String = s"${ts.id}"
 }
