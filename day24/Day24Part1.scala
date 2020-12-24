@@ -5,23 +5,21 @@ import utils.FileReader
 import scala.collection.mutable.ArrayBuffer
 
 object Day24Part1 {
-    type Cell = (Int, Int)
-
     final val DIRECTION_PREFIXES = Set('n', 's')
     final val GRID_SIZE = 150
-    final val REFERENCE_CELL = (GRID_SIZE / 2, GRID_SIZE / 2)
+    final val REFERENCE_CELL = new Cell(GRID_SIZE / 2, GRID_SIZE / 2)
 
     final val WHITE = 0
     final val BLACK = 1
     final val grid = Array.ofDim[Int](GRID_SIZE, GRID_SIZE)
 
     final val STEPS_DELTAS = Map(
-        "w" -> (-1, 0),
-        "e" -> (1, 0),
-        "sw" -> (0, 1),
-        "se" -> (1, 1),
-        "nw" -> (-1, -1),
-        "ne" -> (0, -1)
+        "w" -> new Cell(-1, 0),
+        "e" -> new Cell(1, 0),
+        "sw" -> new Cell(0, 1),
+        "se" -> new Cell(1, 1),
+        "nw" -> new Cell(-1, -1),
+        "ne" -> new Cell(0, -1)
     )
 
     def main(args: Array[String]): Unit = {
@@ -38,14 +36,12 @@ object Day24Part1 {
 
     def travelPath(path: Array[String]): Cell = {
         var curr = REFERENCE_CELL
-        path.foreach(move => curr = applyDelta(curr, STEPS_DELTAS(move)))
+        path.foreach(move => curr += STEPS_DELTAS(move))
         curr
     }
 
-    def applyDelta(cell: Cell, delta: Cell): Cell = (cell._1 + delta._1, cell._2 + delta._2)
-
-    def toggleCell(cell: Cell): Unit = cell match {
-        case (x, y) => grid(x)(y) = 1 - grid(x)(y)
+    def toggleCell(cell: Cell): Unit = {
+        grid(cell.x)(cell.y) = 1 - grid(cell.x)(cell.y)
     }
 
     def numBlackTiles: Int = grid
