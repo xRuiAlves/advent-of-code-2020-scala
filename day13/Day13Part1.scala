@@ -1,16 +1,16 @@
 package day13
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day13Part1 {
-    def main(args: Array[String]): Unit = {
+object Day13Part1 extends DaySolution(13, 1) {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day13/input.txt").toArray
 
         val min_time = lines(0).toInt
         val ids = lines(1).split(",").filter(_ != "x").map(_.toInt)
 
         val bus_info = findBus(min_time, ids)
-        println((bus_info._1 - min_time) * bus_info._2)
+        ((bus_info._1 - min_time) * bus_info._2).toString
     }
 
     def findBus(min_time: Int, ids: Array[Int]): (Int, Int) = {

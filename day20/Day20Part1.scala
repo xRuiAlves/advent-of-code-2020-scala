@@ -1,9 +1,9 @@
 package day20
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day20Part1 {
-    def main(args: Array[String]): Unit = {
+object Day20Part1 extends DaySolution(20, 1) {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day20/input.txt").toArray
         val tile_sets = lines
             .mkString("\n")
@@ -26,7 +26,7 @@ object Day20Part1 {
             .map(_.ts.id.toLong)
         ).toSet
 
-        println(corner_ids.product)
+        corner_ids.product.toString
     }
 
     def matchTiles(t1: Tile, t2: Tile): Unit = {

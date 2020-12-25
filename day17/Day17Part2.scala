@@ -1,8 +1,8 @@
 package day17
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day17Part2 {
+object Day17Part2 extends DaySolution(17, 2) {
     type Array4D = Array[Array[Array[Array[Char]]]]
 
     final val ACTIVE = '#'
@@ -10,7 +10,7 @@ object Day17Part2 {
     final val OUT_OF_BOUNDS = '_'
     final val NUM_CYCLES = 6
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day17/input.txt").toArray
         val N = lines.last.length
         val hcube_side = N + 2*NUM_CYCLES
@@ -47,7 +47,7 @@ object Day17Part2 {
             hcube_space_swap = temp
         }
 
-        println(countActiveCubes(hcube_space))
+        countActiveCubes(hcube_space).toString
     }
 
     def countActiveNeighbors(hcube_space: Array4D, x: Int, y: Int, z: Int, w: Int): Int = {

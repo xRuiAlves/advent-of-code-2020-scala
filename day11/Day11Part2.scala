@@ -1,10 +1,10 @@
 package day11
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day11Part2 {
+object Day11Part2 extends DaySolution(11, 2) {
     final val EMPTY = 'L'
     final val OCCUPIED = '#'
     final val FLOOR = '.'
@@ -12,7 +12,7 @@ object Day11Part2 {
 
     val neighbors_map = new mutable.HashMap[(Int, Int), Array[(Int, Int)]]()
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         var map = FileReader.readFile("Advent-Of-Code-2020/day11/input.txt").toArray.map(_.split("").map(_.last))
         populateNeighbors(map)
         var map_updated = true
@@ -23,7 +23,7 @@ object Day11Part2 {
             map = update._2
         }
 
-        println(countOccupiedSeats(map))
+        countOccupiedSeats(map).toString
     }
 
     def updateMap(map: Array[Array[Char]]): (Boolean, Array[Array[Char]]) = {

@@ -1,13 +1,13 @@
 package day25
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day25 {
+object Day25 extends DaySolution(25) {
     final val LOOP_DIVISOR = 20201227L
     final val DEFAULT_SUBJECT = 7L
     final val INIT_VALUE = 1L
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day25/input.txt").toArray
         val pub_key1 = lines.head.toLong
         val pub_key2 = lines.last.toLong
@@ -19,7 +19,7 @@ object Day25 {
         val v2 = loop(pub_key2, l1)
 
         assert(v1 == v2)
-        println(v1)
+        v1.toString
     }
 
     def transform(value: Long, subject: Long): Long = (value * subject) % LOOP_DIVISOR

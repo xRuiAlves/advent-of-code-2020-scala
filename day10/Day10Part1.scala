@@ -1,9 +1,9 @@
 package day10
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day10Part1 {
-    def main(args: Array[String]): Unit = {
+object Day10Part1 extends DaySolution(10, 1) {
+    override def calculate: String = {
         val joltages = FileReader.readFile("Advent-Of-Code-2020/day10/input.txt").map(_.toInt).toArray.sortWith(_ < _)
         var ones_count = 1
         var threes_count = 1
@@ -14,6 +14,6 @@ object Day10Part1 {
             threes_count += (if (diff == 3) 1 else 0)
         }
 
-        println(ones_count * threes_count)
+        (ones_count * threes_count).toString
     }
 }

@@ -1,14 +1,14 @@
 package day4
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-object Day4Part1 {
+object Day4Part1 extends DaySolution(4, 1) {
     final val REQUIRED_FIELDS = Seq("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day4/input.txt").toList
         val passports = new ArrayBuffer[mutable.HashMap[String, String]]()
         passports.addOne(new mutable.HashMap[String, String]())
@@ -25,7 +25,7 @@ object Day4Part1 {
         })
 
         val num_valid = passports.count(passport => isPassportValid(passport))
-        println(num_valid)
+        num_valid.toString
     }
 
     def isPassportValid(passport: mutable.HashMap[String, String]): Boolean = {

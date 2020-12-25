@@ -1,13 +1,12 @@
 package day20
 
-import utils.FileReader
-import utils.MatrixOps
+import utils.{DaySolution, FileReader, MatrixOps}
 
-object Day20Part2 {
+object Day20Part2 extends DaySolution(20, 2) {
     final val BLUR_CELL = '#'
     final val TAGGED_MONSTER_CELL = 'O'
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day20/input.txt").toArray
 
         val tile_sets = lines
@@ -36,7 +35,7 @@ object Day20Part2 {
 
         val puzzle = mergePuzzle(tile_puzzle)
         val count = countSafeBlurCells(puzzle)
-        println(count)
+        count.toString
     }
 
     def matchTiles(t1: Tile, t2: Tile): Unit = {

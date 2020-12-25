@@ -1,10 +1,10 @@
 package day8
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day8Part1 {
+object Day8Part1 extends DaySolution(8, 1) {
     final val NOP = "nop"
     final val ACC = "acc"
     final val JMP = "jmp"
@@ -12,7 +12,7 @@ object Day8Part1 {
     var accumulator = 0
     var pc = 0
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day8/input.txt").toArray
         val instructions = lines.map(parseInstruction)
 
@@ -32,7 +32,7 @@ object Day8Part1 {
             }
         }
 
-        println(accumulator)
+        accumulator.toString
     }
 
     def parseInstruction(instruction: String): (String, Int) = {

@@ -1,13 +1,13 @@
 package day19
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day19Part1 {
+object Day19Part1 extends DaySolution(19, 1) {
     type MatchRes = (Boolean, Int)
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day19/input.txt").toArray
 
         val groups = lines.mkString("\n").split("\n\n")
@@ -24,7 +24,7 @@ object Day19Part1 {
             match_res._1 && match_res._2 == msg.length
         })
 
-        println(valid_count)
+        valid_count.toString
     }
 
     def getMatch(rules: mutable.HashMap[Int, Rule], rule: Rule, msg: String, msg_idx: Int): MatchRes = {

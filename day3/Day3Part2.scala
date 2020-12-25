@@ -1,16 +1,16 @@
 package day3
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day3Part2 {
+object Day3Part2 extends DaySolution(3, 2) {
     final val TREE = '#'
     final val OPEN = '.'
     final val SLOPES = List((1 , 1), (3, 1), (5, 1), (7, 1), (1, 2))
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val map = FileReader.readFile("Advent-Of-Code-2020/day3/input.txt").toArray
         val num_trees = SLOPES.map(slope => countTrees(map.clone, slope)).product
-        println(num_trees)
+        num_trees.toString
     }
 
     def countTrees(map: Array[String], slope: (Int, Int)): Int = {

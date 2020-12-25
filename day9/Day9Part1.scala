@@ -1,19 +1,18 @@
 package day9
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day9Part1 {
+object Day9Part1 extends DaySolution(9, 1) {
     final val PREAMBLE_SIZE = 25
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day9/input.txt").toArray.map(_.toLong)
 
         for (i <- PREAMBLE_SIZE until lines.length) {
             if (!sumTwo(lines, i)) {
-                println(lines(i))
-                return
+                return lines(i).toString
             }
         }
 

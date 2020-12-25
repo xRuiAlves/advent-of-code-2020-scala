@@ -1,14 +1,14 @@
 package day1
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day1Part1 {
+object Day1Part1 extends DaySolution(1, 1) {
     final val YEAR = 2020
 
-    def main(args: Array[String]): Unit = {
-        val nums = FileReader.readFile("Advent-Of-Code-2020/day1/input.txt").map(_.toInt)
+    override def calculate: String = {
+        val nums = FileReader.readFile(s"Advent-Of-Code-2020/day$day/input.txt").map(_.toInt)
         val visited = new mutable.HashSet[Int]()
 
         def findPair: (Int, Int) = {
@@ -21,6 +21,6 @@ object Day1Part1 {
         }
 
         val pair = findPair
-        println(pair._1 * pair._2)
+        (pair._1 * pair._2).toString
     }
 }

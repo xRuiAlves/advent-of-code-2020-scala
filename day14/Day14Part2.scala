@@ -1,14 +1,14 @@
 package day14
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day14Part2 {
+object Day14Part2 extends DaySolution(14, 2) {
     final val MEM_ACCESS_REGEX = "^mem\\[(\\d+)\\]\\s=\\s(\\d+)$".r
     final val MASK_SIZE = 36
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day14/input.txt").toArray
         val memory = new mutable.HashMap[Long, Long]()
         var mask: String = null
@@ -26,8 +26,7 @@ object Day14Part2 {
             }
         })
 
-        val sum = memory.values.sum
-        println(sum)
+        memory.values.sum.toString
     }
 
     def findMemPositions(address: Long, mask: String): Array[Long] = {

@@ -1,14 +1,14 @@
 package day11
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day11Part1 {
+object Day11Part1 extends DaySolution(11, 1) {
     final val EMPTY = 'L'
     final val OCCUPIED = '#'
     final val FLOOR = '.'
     final val INVALID = '_'
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         var map = FileReader.readFile("Advent-Of-Code-2020/day11/input.txt").toArray.map(_.split("").map(_.last))
         var map_updated = true
 
@@ -18,7 +18,7 @@ object Day11Part1 {
             map = update._2
         }
 
-        println(countOccupiedSeats(map))
+        countOccupiedSeats(map).toString
     }
 
     def updateMap(map: Array[Array[Char]]): (Boolean, Array[Array[Char]]) = {

@@ -1,17 +1,17 @@
 package day19
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-object Day19Part2 {
+object Day19Part2 extends DaySolution(19, 2) {
     final val RULES_TO_UPDATE = Map(
         8 -> "8: 42 | 42 8",
         11 -> "11: 42 31 | 42 11 31"
     )
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day19/input.txt").toArray
 
         val groups = lines.mkString("\n").split("\n\n")
@@ -26,7 +26,7 @@ object Day19Part2 {
         RULES_TO_UPDATE.foreach(kv => rules(kv._1) = new Rule(kv._2))
         val valid_count = msg_lines.count(msg => getMatches(rules, rules(0), msg, 0).contains(msg.length))
 
-        println(valid_count)
+        valid_count.toString
     }
 
     def getMatches(rules: mutable.HashMap[Int, Rule], rule: Rule, msg: String, msg_idx: Int): ArrayBuffer[Int] = {

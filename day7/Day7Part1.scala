@@ -1,15 +1,15 @@
 package day7
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-object Day7Part1 {
+object Day7Part1 extends DaySolution(7, 1) {
     final val LINE_REGEX = "^(\\w+ \\w+) bags contain ((?:\\d+ \\w+ \\w+ \\w+(?:,\\s|\\.))*|no other bags\\.)$".r
     final val SHINY = "shiny gold"
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day7/input.txt").toList
         val graph = new mutable.HashMap[String, ArrayBuffer[String]]()
 
@@ -26,7 +26,7 @@ object Day7Part1 {
         val visited = new mutable.HashSet[String]()
         dfs(graph, SHINY, visited)
 
-        println(visited.size - 1)
+        (visited.size - 1).toString
     }
 
     def parseChildren(s: String): Array[(String, Int)] = {

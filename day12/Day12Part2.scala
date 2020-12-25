@@ -1,8 +1,8 @@
 package day12
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day12Part2 {
+object Day12Part2 extends DaySolution(12, 2) {
     final val DIRECTIONS = Map(
         'E' -> (1, 0),
         'W' -> (-1, 0),
@@ -10,7 +10,7 @@ object Day12Part2 {
         'S' -> (0, -1)
     )
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day12/input.txt").toArray
         val instructions = lines.map(line => (line(0), line.substring(1).toInt))
 
@@ -35,7 +35,7 @@ object Day12Part2 {
         }
 
         val dist = math.abs(x) + math.abs(y)
-        println(dist)
+        dist.toString
     }
 
     def rotateRelativePoint(way: Char, amount: Int, x: Int, y: Int): (Int, Int) = {

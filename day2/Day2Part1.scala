@@ -1,14 +1,14 @@
 package day2
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day2Part1 {
+object Day2Part1 extends DaySolution(2, 1) {
     final val PASS_RULE_REGEX = "(\\d+)-(\\d+) (\\w): (\\w+)".r
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val list = FileReader.readFile("Advent-Of-Code-2020/day2/input.txt")
         val num_valid = list.count(s => isValid(s))
-        println(num_valid)
+        num_valid.toString
     }
 
     def isValid(pass_rule: String): Boolean = {

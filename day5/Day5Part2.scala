@@ -1,23 +1,24 @@
 package day5
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day5Part2 {
+object Day5Part2 extends DaySolution(5, 2) {
     final val NUM_ROWS = 128
     final val NUM_COLS = 8
     final val NUM_ROW_INDICATORS = 7
     final val NUM_COL_INDICATORS = 3
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day5/input.txt").toList
         val ids = lines.map(line => getId(line)).sortWith(_<_)
 
         for (i <- 0 until ids.length - 1) {
             if (ids(i) + 1 != ids(i + 1)) {
-                println(ids(i) + 1)
-                return
+                return (ids(i) + 1).toString
             }
         }
+
+        throw new Exception("Solution not found")
     }
 
     def getId(coordinates: String): Int = {

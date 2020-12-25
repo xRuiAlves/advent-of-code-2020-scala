@@ -1,10 +1,10 @@
 package day24
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable.ArrayBuffer
 
-object Day24Part2 {
+object Day24Part2 extends DaySolution(24, 2) {
     final val DIRECTION_PREFIXES = Set('n', 's')
     final val GRID_SIZE = 200
     final val NUM_DAYS = 100
@@ -24,7 +24,7 @@ object Day24Part2 {
         "ne" -> new Cell(0, -1)
     )
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day24/input.txt").toArray
         val paths = lines.map(line => parsePath(line))
 
@@ -38,7 +38,7 @@ object Day24Part2 {
             memSwap()
         }
 
-        println(numBlackTiles)
+        numBlackTiles.toString
     }
 
     def applyDailyCycle(): Unit = {

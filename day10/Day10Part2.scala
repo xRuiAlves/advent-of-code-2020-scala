@@ -1,14 +1,14 @@
 package day10
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-object Day10Part2 {
+object Day10Part2 extends DaySolution(10, 2) {
     val cache = new mutable.HashMap[Int, Long]()
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val nums = FileReader.readFile("Advent-Of-Code-2020/day10/input.txt").map(_.toLong).toArray
         val joltages = new ArrayBuffer[Long]()
         joltages.addOne(0)
@@ -16,8 +16,7 @@ object Day10Part2 {
         joltages.addOne(joltages.last + 3)
 
         cache(joltages.length - 1) = 1
-        val res = dfs(joltages, 0)
-        println(res)
+        dfs(joltages, 0).toString
     }
 
     def dfs(joltages: ArrayBuffer[Long], i: Int): Long = {

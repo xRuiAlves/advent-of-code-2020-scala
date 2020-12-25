@@ -1,15 +1,15 @@
 package day21
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day21Part1 {
+object Day21Part1 extends DaySolution(21, 1) {
     type Food = (mutable.HashSet[String], mutable.HashSet[String])
 
     final val FOOD_REGEX = "^(.+)\\s\\(contains\\s(.+)\\)$".r
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day21/input.txt").toArray
         val foods: Array[Food] = lines.map(line => FOOD_REGEX.findFirstMatchIn(line) match {
             case Some(m) => (
@@ -46,6 +46,6 @@ object Day21Part1 {
         val ingredients_with_allergens = allergens.values.to(mutable.HashSet)
         val ingredients_without_allergens = foods.flatMap(_._1.diff(ingredients_with_allergens))
 
-        println(ingredients_without_allergens.length)
+        ingredients_without_allergens.length.toString
     }
 }

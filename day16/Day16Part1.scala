@@ -1,11 +1,11 @@
 package day16
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day16Part1 {
+object Day16Part1 extends DaySolution(16, 1) {
     final val RULE_REGEX = "^([\\w\\s]+):\\s(\\d+)-(\\d+)\\sor\\s(\\d+)-(\\d+)$".r
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day16/input.txt").toArray
         val groups = lines.mkString("\n").split("\n\n")
 
@@ -16,7 +16,7 @@ object Day16Part1 {
             ticket.filterNot(number => matchesSomeRule(number, rules)).sum
         }).sum
 
-        println(error_sum)
+        error_sum.toString
     }
 
     def parseTickets(raw: String): Array[Array[Int]] = raw

@@ -1,10 +1,10 @@
 package day24
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable.ArrayBuffer
 
-object Day24Part1 {
+object Day24Part1 extends DaySolution(24, 1) {
     final val DIRECTION_PREFIXES = Set('n', 's')
     final val GRID_SIZE = 150
     final val REFERENCE_CELL = new Cell(GRID_SIZE / 2, GRID_SIZE / 2)
@@ -22,7 +22,7 @@ object Day24Part1 {
         "ne" -> new Cell(0, -1)
     )
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day24/input.txt").toArray
         val paths = lines.map(line => parsePath(line))
 
@@ -31,7 +31,7 @@ object Day24Part1 {
             toggleCell(cell)
         })
 
-        println(numBlackTiles)
+        numBlackTiles.toString
     }
 
     def travelPath(path: Array[String]): Cell = {

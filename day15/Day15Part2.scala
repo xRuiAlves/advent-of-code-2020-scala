@@ -1,14 +1,14 @@
 package day15
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day15Part2 {
+object Day15Part2 extends DaySolution(15, 2) {
     final val TARGET_NUMBER_ITERATION = 30000000
     final val UNVISITED = 0
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day15/input.txt").toArray
         val initial_numbers = lines.last.split(",").map(_.toInt)
         val visited = new mutable.HashMap[Int, Int]()
@@ -30,6 +30,6 @@ object Day15Part2 {
             }
         }
 
-        println(curr)
+        curr.toString
     }
 }

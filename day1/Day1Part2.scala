@@ -1,14 +1,12 @@
 package day1
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-import scala.collection.mutable
-
-object Day1Part2 {
+object Day1Part2 extends DaySolution(1, 2) {
     final val YEAR = 2020
 
-    def main(args: Array[String]): Unit = {
-        val nums: Array[Int] = FileReader.readFile("Advent-Of-Code-2020/day1/input.txt").map(_.toInt).toArray.sortWith(_<_)
+    override def calculate: String = {
+        val nums: Array[Int] = FileReader.readFile(s"Advent-Of-Code-2020/day$day/input.txt").map(_.toInt).toArray.sortWith(_<_)
 
         def findTrio: (Int, Int, Int) = {
             for (i <- nums.indices) {
@@ -26,6 +24,6 @@ object Day1Part2 {
         }
 
         val trio = findTrio
-        println(trio._1 * trio._2 * trio._3)
+        (trio._1 * trio._2 * trio._3).toString
     }
 }

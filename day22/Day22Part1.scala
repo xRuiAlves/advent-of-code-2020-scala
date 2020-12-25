@@ -1,11 +1,11 @@
 package day22
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day22Part1 {
-    def main(args: Array[String]): Unit = {
+object Day22Part1 extends DaySolution(22, 1) {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day22/input.txt").toArray
         val raw_hands = lines.mkString("\n").split("\n\n")
 
@@ -14,7 +14,7 @@ object Day22Part1 {
         playGame(h1, h2)
 
         val score = if (h1.nonEmpty) calcScore(h1) else calcScore(h2)
-        println(score)
+        score.toString
     }
 
     def playGame(h1: mutable.Queue[Int], h2: mutable.Queue[Int]): Boolean = {

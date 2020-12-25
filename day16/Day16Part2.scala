@@ -1,13 +1,13 @@
 package day16
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day16Part2 {
+object Day16Part2 extends DaySolution(16, 2) {
     final val RULE_REGEX = "^([\\w\\s]+):\\s(\\d+)-(\\d+)\\sor\\s(\\d+)-(\\d+)$".r
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day16/input.txt").toArray
         val groups = lines.mkString("\n").split("\n\n")
 
@@ -50,7 +50,7 @@ object Day16Part2 {
             .map(idx => my_ticket(idx).toLong)
             .product
         
-        println(prod)
+        prod.toString
     }
 
     def isTicketValid(ticket: Array[Int], rules: Array[TicketRule]): Boolean = {

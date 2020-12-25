@@ -1,14 +1,14 @@
 package day9
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
+import scala.collection.mutable.ArrayBuffer
 
-object Day9Part2 {
+object Day9Part2 extends DaySolution(9, 2) {
     final val PREAMBLE_SIZE = 25
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day9/input.txt").toArray.map(_.toLong)
         val target_sum = findInvalidNum(lines)
 
@@ -25,8 +25,7 @@ object Day9Part2 {
             }
 
             if (curr_sum == target_sum) {
-                println(getWeakness(window))
-                return
+                return getWeakness(window).toString
             }
         }
 

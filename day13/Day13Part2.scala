@@ -1,9 +1,9 @@
 package day13
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day13Part2 {
-    def main(args: Array[String]): Unit = {
+object Day13Part2 extends DaySolution(13, 2) {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day13/input.txt").toArray
 
         val pairs = lines
@@ -17,7 +17,7 @@ object Day13Part2 {
         val remainders = pairs.map(_._2)
 
         val timestamp = crt(nums, remainders)
-        println(timestamp)
+        timestamp.toString
     }
 
     def crt(nums: Array[Long], remainders: Array[Long]): Long = {

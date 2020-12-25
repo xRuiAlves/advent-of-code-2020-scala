@@ -1,20 +1,20 @@
 package day18
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day18Part2 {
+object Day18Part2 extends DaySolution(18, 2) {
     final val NO_OP = ' '
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day18/input.txt").toArray
         val res = lines
             .map(_.replaceAll("\\s", ""))
             .map(expression => eval(expression))
             .sum
 
-        println(res)
+        res.toString
     }
 
     def eval(expression: String): Long = eval(expression, 0, expression.length)

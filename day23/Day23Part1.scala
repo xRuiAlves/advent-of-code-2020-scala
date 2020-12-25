@@ -1,16 +1,16 @@
 package day23
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
 import scala.collection.mutable
 
-object Day23Part1 {
+object Day23Part1 extends DaySolution(23, 1) {
     var list: ListNode = null
     final val NUM_NODES = 9
     final val NUM_MOVES = 100
     final val nodes_map = new Array[ListNode](NUM_NODES + 1)
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val nums = FileReader
             .readFile("Advent-Of-Code-2020/day23/input.txt")
             .toArray
@@ -25,7 +25,7 @@ object Day23Part1 {
             curr = move(curr)
         }
 
-        println(buildLabelString())
+        buildLabelString()
     }
 
     def move(curr: ListNode): ListNode = {

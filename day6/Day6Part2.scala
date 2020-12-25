@@ -1,11 +1,11 @@
 package day6
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day6Part2 {
+object Day6Part2 extends DaySolution(6, 2) {
     final val ALPHABET_START = 'a'
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day6/input.txt").toList.mkString("\n")
         val group_answers = lines.split("\n\n").map(group => group.split("\n"))
         var count = 0
@@ -18,7 +18,7 @@ object Day6Part2 {
             count += countMaskOnes(mask)
         })
 
-        println(count)
+        count.toString
     }
 
     def strToMask(str: String): Int = {

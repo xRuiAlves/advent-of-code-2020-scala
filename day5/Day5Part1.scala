@@ -1,17 +1,17 @@
 package day5
 
-import utils.FileReader
+import utils.{DaySolution, FileReader}
 
-object Day5Part1 {
+object Day5Part1 extends DaySolution(5, 1) {
     final val NUM_ROWS = 128
     final val NUM_COLS = 8
     final val NUM_ROW_INDICATORS = 7
     final val NUM_COL_INDICATORS = 3
 
-    def main(args: Array[String]): Unit = {
+    override def calculate: String = {
         val lines = FileReader.readFile("Advent-Of-Code-2020/day5/input.txt").toList
         val max_id = lines.map(line => getId(line)).max
-        println(max_id)
+        max_id.toString
     }
 
     def getId(coordinates: String): Int = {
